@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "infinities",
+  "version": "${version}",
+
+  "name": "Infinities",
+  "description": "Improves Infinity enchantment; no arrows needed and more!",
+  "authors": [
+    "Domi"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/infinities",
+    "sources": "https://github.com/FakeDomi/Infinities",
+    "issues": "https://github.com/FakeDomi/Infinities/issues"
+  },
+
+  "license": "MIT",
+  "icon": "assets/infinities/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+    ]
+  },
+  "mixins": [
+    "infinities.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": "*",
+    "minecraft": ">=1.17",
+    "java": ">=16"
+  }
+}
