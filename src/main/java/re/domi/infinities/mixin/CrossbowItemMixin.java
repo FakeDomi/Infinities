@@ -23,7 +23,7 @@ public class CrossbowItemMixin
     @Inject(method = "shoot",
             at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/item/CrossbowItem;createArrow(Lnet/minecraft/world/World;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/entity/projectile/PersistentProjectileEntity;"),
             locals = LocalCapture.CAPTURE_FAILHARD)
-    private static void shoot(World world, LivingEntity shooter, Hand hand, ItemStack crossbow, ItemStack projectile, float soundPitch, boolean creative, float speed, float divergence, float simulated, CallbackInfo ci, boolean isRocket, ProjectileEntity projectileEntity)
+    private static void infinities_shoot(World world, LivingEntity shooter, Hand hand, ItemStack crossbow, ItemStack projectile, float soundPitch, boolean creative, float speed, float divergence, float simulated, CallbackInfo ci, boolean isRocket, ProjectileEntity projectileEntity)
     {
         if (simulated == 0F && projectile.getItem() == Items.ARROW && EnchantmentHelper.getLevel(Enchantments.INFINITY, crossbow) > 0)
         {
@@ -32,7 +32,7 @@ public class CrossbowItemMixin
     }
 
     @ModifyVariable(method = "loadProjectile", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getItem()Lnet/minecraft/item/Item;", shift = At.Shift.BY, by = -2, ordinal = 0), ordinal = 0)
-    private static boolean keepArrow(boolean orig, LivingEntity shooter, ItemStack crossbow, ItemStack projectile)
+    private static boolean infinities_keepArrow(boolean orig, LivingEntity shooter, ItemStack crossbow, ItemStack projectile)
     {
         return orig || (projectile.getItem() == Items.ARROW && EnchantmentHelper.getLevel(Enchantments.INFINITY, crossbow) > 0);
     }

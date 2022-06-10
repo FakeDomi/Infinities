@@ -5,22 +5,18 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import re.domi.infinities.Config;
 
-@Mixin(InfinityEnchantment.class)
+@Mixin(value = InfinityEnchantment.class, priority = 1500)
 public class InfinityEnchantmentMixin extends Enchantment
 {
-    protected InfinityEnchantmentMixin(Rarity weight, EnchantmentTarget type, EquipmentSlot[] slotTypes)
-    {
-        super(weight, type, slotTypes);
-    }
-
-    @Inject(method = "canAccept", at = @At("HEAD"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
-    public void canAccept(Enchantment other, CallbackInfoReturnable<Boolean> cir)
+    @Inject(method = "canAccept", at = @At("HEAD"), cancellable = true)
+    public void infinities_canAccept(Enchantment other, CallbackInfoReturnable<Boolean> cir)
     {
         if (!Config.infinityWithMultishot && other instanceof MultishotEnchantment)
         {
@@ -33,8 +29,23 @@ public class InfinityEnchantmentMixin extends Enchantment
     }
 
     @Override
+    @Unique(silent = true)
     public boolean isAcceptableItem(ItemStack stack)
     {
-        return super.isAcceptableItem(stack) || (Config.infinityOnCrossbow && stack.getItem() == Items.CROSSBOW);
+        return super.isAcceptableItem(stack);
+    }
+
+    @Inject(method = { "isAcceptableItem", "method_8192" }, at = @At("HEAD"), cancellable = true, remap = false)
+    public void infinities_isAcceptableItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir)
+    {
+        if (Config.infinityOnCrossbow && stack.getItem() == Items.CROSSBOW)
+        {
+            cir.setReturnValue(true);
+        }
+    }
+
+    protected InfinityEnchantmentMixin()
+    {
+        super(null, null, null);
     }
 }

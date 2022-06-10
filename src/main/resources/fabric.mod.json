@@ -9,7 +9,7 @@
     "Domi"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/infinities",
+    "homepage": "https://domi.re/mc-mods/infinities",
     "sources": "https://github.com/FakeDomi/Infinities",
     "issues": "https://github.com/FakeDomi/Infinities/issues"
   },
@@ -28,7 +28,6 @@
 
   "depends": {
     "fabricloader": "*",
-    "minecraft": ">=1.18",
-    "java": ">=17"
+    "minecraft": ">=1.19"
   }
 }

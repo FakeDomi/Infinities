@@ -15,7 +15,7 @@ import re.domi.infinities.Config;
 public class PlayerEntityMixin
 {
     @Inject(method = "getArrowType", at = @At("RETURN"), cancellable = true)
-    public void getArrowType(ItemStack stack, CallbackInfoReturnable<ItemStack> cir)
+    public void infinities_getArrowType(ItemStack stack, CallbackInfoReturnable<ItemStack> cir)
     {
         if (cir.getReturnValue().isEmpty() && (Config.infinityOnCrossbow || stack.getItem() != Items.CROSSBOW) && EnchantmentHelper.getLevel(Enchantments.INFINITY, stack) > 0)
         {
