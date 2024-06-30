@@ -2,24 +2,31 @@ package re.domi.infinities.mixin;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.RegistryKeys;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import re.domi.infinities.Config;
 
 @Mixin(PlayerEntity.class)
-public class PlayerEntityMixin
+public abstract class PlayerEntityMixin extends LivingEntity
 {
     @Inject(method = "getProjectileType", at = @At("RETURN"), cancellable = true)
     public void infinities_getArrowType(ItemStack stack, CallbackInfoReturnable<ItemStack> cir)
     {
-        if (cir.getReturnValue().isEmpty() && (Config.infinityOnCrossbow || stack.getItem() != Items.CROSSBOW) && EnchantmentHelper.getLevel(Enchantments.INFINITY, stack) > 0)
+        if (cir.getReturnValue().isEmpty() && EnchantmentHelper.getLevel(this.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.INFINITY).orElseThrow(), stack) > 0)
         {
             cir.setReturnValue(new ItemStack(Items.ARROW));
         }
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    protected PlayerEntityMixin()
+    {
+        super(null, null);
     }
 }
