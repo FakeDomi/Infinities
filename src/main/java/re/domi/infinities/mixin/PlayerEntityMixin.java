@@ -18,7 +18,7 @@ public abstract class PlayerEntityMixin extends LivingEntity
     @Inject(method = "getProjectileType", at = @At("RETURN"), cancellable = true)
     public void getArrowType(ItemStack stack, CallbackInfoReturnable<ItemStack> cir)
     {
-        if (cir.getReturnValue().isEmpty() && EnchantmentHelper.getLevel(this.getWorld().getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.INFINITY.getValue()).orElseThrow(), stack) > 0)
+        if (cir.getReturnValue().isEmpty() && EnchantmentHelper.getLevel(this.getEntityWorld().getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.INFINITY.getValue()).orElseThrow(), stack) > 0)
         {
             cir.setReturnValue(new ItemStack(Items.ARROW));
         }
